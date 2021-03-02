@@ -1,4 +1,4 @@
-import { assert, assertUsage, slice } from '../utils'
+import { assertUsage, slice } from '../utils'
 import { getAllUserFiles, FileType } from './infra.shared'
 
 export { getUserFiles }
