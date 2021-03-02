@@ -1,4 +1,4 @@
-import { assertUsage, slice } from '../utils'
+import { assertUsage } from '../utils'
 import { getAllUserFiles, FileType } from './infra.shared'
 
 export { getUserFiles }
@@ -62,9 +62,12 @@ function assertExtensions(allUserFiles: AllUserFiles) {
       | '.page.server'
       | '.page.route'
     Object.keys(allUserFiles[fileExt] || {}).forEach((filePath) => {
-      const fileExt = slice(filePath.split('.'), -3, -1)
+      const [segment1, segment2, extension] = filePath.split('.').slice(-3)
+      if (extension === 'json') {
+        return
+      }
       assertUsage(
-        fileExt[0] === 'page' && fileExt[1] === ext,
+        segment1 === 'page' && segment2 === ext,
         `The file ${filePath} should be name \`*.page.${ext}.*\`. Add the missing \`.page\`.`
       )
     })
